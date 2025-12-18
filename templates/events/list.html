@@ -1,0 +1,66 @@
+{% extends 'app_base.html' %}
+
+{% block title %}Events - Event Scheduler{% endblock %}
+{% block header_title %}Events{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-end mb-4">
+    <a href="{{ url_for('create_event') }}" class="btn btn-primary rounded-pill px-4">
+        <i class="fas fa-plus me-2"></i> Create Event
+    </a>
+</div>
+
+<div class="dashboard-card">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="bg-light">
+                    <tr>
+                        <th class="ps-4 border-0 rounded-start">Title</th>
+                        <th class="border-0">Start Time</th>
+                        <th class="border-0">End Time</th>
+                        <th class="border-0">Allocated Resources</th>
+                        <th class="border-0 rounded-end text-end pe-4">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for event in events %}
+                    <tr>
+                        <td class="ps-4 fw-bold text-primary">{{ event.title }}</td>
+                        <td>{{ event.start_time.strftime('%b %d, %Y %H:%M') }}</td>
+                        <td>{{ event.end_time.strftime('%b %d, %Y %H:%M') }}</td>
+                        <td>
+                            {% if event.allocations %}
+                            {% for alloc in event.allocations %}
+                            <span class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill">{{
+                                alloc.resource.name }}</span>
+                            {% endfor %}
+                            {% else %}
+                            <span class="text-muted small">None</span>
+                            {% endif %}
+                        </td>
+                        <td class="text-end pe-4">
+                            <a href="{{ url_for('allocate_to_event', event_id=event.id) }}"
+                                class="btn btn-sm btn-outline-info rounded-pill me-1" title="Allocate Resource">
+                                <i class="fas fa-link"></i>
+                            </a>
+                            <a href="{{ url_for('edit_event', event_id=event.id) }}"
+                                class="btn btn-sm btn-outline-warning rounded-pill" title="Edit">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="5" class="text-center py-5 text-muted">
+                            <i class="fas fa-calendar-times fa-3x mb-3 text-light"></i>
+                            <p>No events found.</p>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

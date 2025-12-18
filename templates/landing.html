@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+
+{% block title %}Welcome - Event Scheduler{% endblock %}
+
+{% block page_body %}
+<!-- Flashes Area -->
+<div class="container mt-3">
+    {{ self.flashes() }}
+</div>
+
+<!-- Modern Split Hero Section -->
+<div class="landing-split">
+    <!-- Abstract Blobs -->
+    <div class="shape-blob blob-1"></div>
+    <div class="shape-blob blob-2"></div>
+
+    <div class="landing-container z-2">
+        <div class="hero-row">
+            <!-- Text Content -->
+            <div class="hero-content fade-in-up">
+                <span class="badge bg-primary-subtle text-primary mb-3 fw-bold px-3 py-2 rounded-pill">
+                    New v2.0 Released
+                </span>
+                <h1 class="hero-title-modern">
+                    Scheduling made <br>
+                    <span class="text-primary">intelligent.</span>
+                </h1>
+                <p class="hero-subtitle-modern">
+                    Streamline your event management workflow. Allocate resources, track utilization, and prevent
+                    conflicts with our next-gen platform.
+                </p>
+                <div class="d-flex justify-content-center gap-3">
+                    <a href="{{ url_for('register') }}" class="btn-glow text-decoration-none">
+                        Start for Free
+                    </a>
+                    <a href="{{ url_for('login') }}" class="btn-outline-modern text-decoration-none">
+                        Login
+                    </a>
+                </div>
+                <div class="mt-4 text-secondary small">
+                    <i class="fas fa-check-circle text-success me-1"></i> No credit card required &nbsp;
+                    <i class="fas fa-check-circle text-success me-1"></i> 14-day free trial
+                </div>
+            </div>
+
+            <!-- Visual Content -->
+            <div class="hero-visual fade-in-up delay-100">
+                <div class="position-relative">
+                    <img src="https://cdn.dribbble.com/userupload/27013480/file/still-2e9ee359ab912aeb819a7a2c2f6f6f92.gif"
+                        alt="Event Management Dashboard" class="img-fluid"
+                        style="max-width: 100%; width: 600px; filter: drop-shadow(0 20px 40px rgba(79, 70, 229, 0.15)); mix-blend-mode: multiply;">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Features Section -->
+<div class="features-section">
+    <div class="landing-container">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold display-6 mb-3">Everything you need</h2>
+            <p class="text-secondary lead">Powerful features to help you grow.</p>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-md-4 fade-in-up delay-100">
+                <div class="feature-card-modern">
+                    <div class="icon-box-modern bg-primary-subtle text-primary">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <h3 class="h4 fw-bold">Smart Scheduling</h3>
+                    <p class="text-secondary mb-0">
+                        Drag-and-drop events and let our engine handle the complex logic of resource allocation and
+                        timing.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-4 fade-in-up delay-200">
+                <div class="feature-card-modern">
+                    <div class="icon-box-modern bg-warning-subtle text-warning">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="h4 fw-bold">Conflict Guard</h3>
+                    <p class="text-secondary mb-0">
+                        Proactive conflict detection ensures you never double-book a resource or room again.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-4 fade-in-up delay-300">
+                <div class="feature-card-modern">
+                    <div class="icon-box-modern bg-success-subtle text-success">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="h4 fw-bold">Real-time Analytics</h3>
+                    <p class="text-secondary mb-0">
+                        Visualize usage patterns and optimize your inventory with beautiful, interactive charts.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

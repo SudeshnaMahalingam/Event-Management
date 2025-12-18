@@ -1,0 +1,211 @@
+{% extends 'app_base.html' %}
+
+{% block title %}Dashboard - Event Scheduler{% endblock %}
+{% block header_title %}Overview{% endblock %}
+
+{% block content %}
+<!-- Section Header -->
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h3 class="fw-bold mb-1">Dashboard</h3>
+        <p class="text-secondary mb-0">Overview of your scheduled events and resources.</p>
+    </div>
+    <div class="d-flex gap-3">
+        <!-- Date Display / Filter could go here -->
+        <div class="d-flex align-items-center px-3 py-2 bg-white border rounded-3 text-secondary shadow-sm">
+            <i class="far fa-calendar-alt me-2"></i>
+            <span class="fw-medium">{{ today_date }}</span>
+        </div>
+    </div>
+</div>
+
+<!-- Stats Grid -->
+<div class="row g-4 mb-4">
+    <div class="col-12 col-md-6 col-lg-3 fade-in" style="animation-delay: 0.05s">
+        <div class="card-elegant">
+            <div class="stat-header">
+                <span class="stat-label">Total Events</span>
+                <div class="stat-icon purple">
+                    <i class="fas fa-calendar-check"></i>
+                </div>
+            </div>
+            <div class="stat-value">{{ total_events }}</div>
+            <div class="d-flex align-items-center text-success small">
+                <i class="fas fa-arrow-up me-1"></i> <span class="fw-bold">12%</span><span
+                    class="text-secondary ms-1">vs last month</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-6 col-lg-3 fade-in" style="animation-delay: 0.1s">
+        <div class="card-elegant">
+            <div class="stat-header">
+                <span class="stat-label">Resources</span>
+                <div class="stat-icon blue">
+                    <i class="fas fa-layer-group"></i>
+                </div>
+            </div>
+            <div class="stat-value">{{ total_resources }}</div>
+            <div class="d-flex align-items-center text-secondary small">
+                <span class="fw-medium">Active now</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-6 col-lg-3 fade-in" style="animation-delay: 0.15s">
+        <div class="card-elegant">
+            <div class="stat-header">
+                <span class="stat-label">Upcoming</span>
+                <div class="stat-icon orange">
+                    <i class="fas fa-hourglass-start"></i>
+                </div>
+            </div>
+            <div class="stat-value">3</div>
+            <div class="d-flex align-items-center text-secondary small">
+                <span class="fw-medium">Next 24 Hours</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-6 col-lg-3 fade-in" style="animation-delay: 0.2s">
+        <div class="card-elegant">
+            <div class="stat-header">
+                <span class="stat-label">Completed</span>
+                <div class="stat-icon green">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+            </div>
+            <div class="stat-value">12</div>
+            <div class="d-flex align-items-center text-success small">
+                <span class="fw-medium">+4 today</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Content Grid -->
+<div class="row g-4">
+    <!-- Recent Activity Feed -->
+    <div class="col-lg-8 fade-in" style="animation-delay: 0.25s">
+        <div class="card-elegant" style="min-height: 480px;">
+            <div class="section-header">
+                <h5 class="section-title">Recent Activity</h5>
+                <a href="{{ url_for('event_list') }}" class="text-decoration-none text-accent fw-medium small">View
+                    All</a>
+            </div>
+
+            {% if recent_events %}
+            <ul class="feed-list">
+                {% for event in recent_events %}
+                <li class="feed-item-elegant">
+                    <div class="feed-icon">
+                        <i class="fas fa-calendar-day"></i>
+                    </div>
+                    <div class="feed-content">
+                        <div class="d-flex justify-content-between">
+                            <h6 class="feed-title">{{ event.title }}</h6>
+                            <span class="feed-meta">{{ event.start_time.strftime('%H:%M') }}</span>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-between mt-1">
+                            <span class="feed-meta">{{ event.start_time.strftime('%b %d, %Y') }}</span>
+                            {% if event.allocations %}
+                            <span class="badge-elegant text-xs">
+                                {{ event.allocations|length }} Resources
+                            </span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <div class="text-center py-5">
+                <div class="mb-3 text-secondary opacity-25">
+                    <i class="far fa-calendar-plus fa-3x"></i>
+                </div>
+                <h6 class="text-secondary mb-3">No recent events</h6>
+                <a href="{{ url_for('create_event') }}" class="btn btn-sm btn-outline-dark rounded-pill px-4">Create
+                    Event</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Utilization Chart -->
+    <div class="col-lg-4 fade-in" style="animation-delay: 0.3s">
+        <div class="card-elegant h-100">
+            <div class="section-header">
+                <h5 class="section-title">Utilization</h5>
+                <i class="fas fa-ellipsis-h text-secondary" style="cursor: pointer;"></i>
+            </div>
+
+            <div class="d-flex justify-content-center align-items-center h-75">
+                <div style="height: 220px; width: 220px; position: relative;">
+                    <canvas id="resourceChart"></canvas>
+                    <!-- Center Text Overlay -->
+                    <div class="position-absolute top-50 start-50 translate-middle text-center">
+                        <span class="d-block fs-3 fw-bold text-dark">{{ total_resources }}</span>
+                        <span class="small text-secondary text-uppercase"
+                            style="font-size: 0.65rem; letter-spacing: 1px;">Total</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-center gap-4 mt-auto pb-2">
+                <div class="d-flex align-items-center">
+                    <span class="d-inline-block rounded-circle me-2"
+                        style="width: 8px; height: 8px; background-color: #111827;"></span>
+                    <small class="text-secondary fw-medium">Busy</small>
+                </div>
+                <div class="d-flex align-items-center">
+                    <span class="d-inline-block rounded-circle me-2"
+                        style="width: 8px; height: 8px; background-color: #E5E7EB;"></span>
+                    <small class="text-secondary fw-medium">Available</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const eventsCount = Number("{{ total_events }}");
+        const resourcesCount = Number("{{ total_resources }}");
+
+        const ctx = document.getElementById('resourceChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Busy', 'Available'],
+                datasets: [{
+                    data: [eventsCount, resourcesCount],
+                    backgroundColor: [
+                        '#111827', // Dark Slate (Busy)
+                        '#E5E7EB'  // Light Gray (Available)
+                    ],
+                    borderWidth: 0,
+                    hoverOffset: 0,
+                    cutout: '85%'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        backgroundColor: '#fff',
+                        titleColor: '#111827',
+                        bodyColor: '#6B7280',
+                        borderColor: '#E5E7EB',
+                        borderWidth: 1,
+                        padding: 10,
+                        displayColors: true,
+                        boxPadding: 4
+                    }
+                }
+            }
+        });
+    });
+</script>
+{% endblock %}

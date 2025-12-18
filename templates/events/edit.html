@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit Event{% endblock %}
+
+{% block content %}
+<h2>Edit Event</h2>
+<div class="card p-4">
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <div class="mb-3">
+            {{ form.title.label(class="form-label") }}
+            {{ form.title(class="form-control") }}
+        </div>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                {{ form.start_time.label(class="form-label") }}
+                {{ form.start_time(class="form-control") }}
+            </div>
+            <div class="col-md-6 mb-3">
+                {{ form.end_time.label(class="form-label") }}
+                {{ form.end_time(class="form-control") }}
+            </div>
+        </div>
+        <div class="mb-3">
+            {{ form.description.label(class="form-label") }}
+            {{ form.description(class="form-control") }}
+        </div>
+
+        {% if event.allocations %}
+        <div class="alert alert-warning">
+            <strong>Warning:</strong> Need to ensure new times don't conflict with currently allocated resources:
+            {% for alloc in event.allocations %}
+            {{ alloc.resource.name }},
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <div class="d-flex justify-content-between">
+            <a href="{{ url_for('event_list') }}" class="btn btn-secondary">Cancel</a>
+            {{ form.submit(class="btn btn-warning") }}
+        </div>
+    </form>
+</div>
+{% endblock %}

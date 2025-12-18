@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+
+{% block title %}Sign Up - Event Scheduler{% endblock %}
+
+{% block page_body %}
+<!-- Background Particles -->
+<div class="particles">
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+</div>
+
+<div class="container position-relative" style="z-index: 2;">
+    <!-- Flashes Area -->
+    <div class="row justify-content-center mt-3">
+        <div class="col-md-6 col-lg-5">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            {% for category, message in messages %}
+            <div class="alert alert-{{ category }} alert-dismissible fade show shadow-sm" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+        </div>
+    </div>
+
+    <!-- Signup Card -->
+    <div class="auth-wrapper">
+        <div class="auth-card fade-in-up">
+            <div class="auth-header">
+                <i class="fas fa-rocket fa-3x mb-3"></i>
+                <h3>Create Account</h3>
+                <p>Join us and start scheduling smarter</p>
+            </div>
+            <div class="card-body p-4 p-md-5">
+                <form method="POST">
+                    {{ form.hidden_tag() }}
+                    <div class="mb-3">
+                        {{ form.username.label(class="form-label") }}
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-0"><i
+                                    class="fas fa-user text-muted"></i></span>
+                            {{ form.username(class="form-control " + ("is-invalid" if form.username.errors else ""),
+                            placeholder="Choose a username") }}
+                            {% for error in form.username.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        {{ form.email.label(class="form-label") }}
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-0"><i
+                                    class="fas fa-envelope text-muted"></i></span>
+                            {{ form.email(class="form-control " + ("is-invalid" if form.email.errors else ""),
+                            placeholder="name@example.com") }}
+                            {% for error in form.email.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        {{ form.password.label(class="form-label") }}
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-0"><i
+                                    class="fas fa-lock text-muted"></i></span>
+                            {{ form.password(class="form-control " + ("is-invalid" if form.password.errors else ""),
+                            placeholder="Create a password") }}
+                            {% for error in form.password.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        {{ form.confirm_password.label(class="form-label") }}
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-0"><i
+                                    class="fas fa-check-circle text-muted"></i></span>
+                            {{ form.confirm_password(class="form-control " + ("is-invalid" if
+                            form.confirm_password.errors else ""), placeholder="Confirm password") }}
+                            {% for error in form.confirm_password.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="d-grid mb-3">
+                        {{ form.submit(class="btn btn-primary btn-lg rounded-pill shadow-sm", value="Sign Up") }}
+                    </div>
+                </form>
+                <div class="auth-footer text-muted">
+                    Already have an account? <a href="{{ url_for('login') }}">Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
