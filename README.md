@@ -42,3 +42,13 @@ Featuring a premium UI, robust conflict detection, and secure authentication.
 Run the conflict logic tests:
 python test_conflict_logic.py
 
+OUTPUT SCREENSHOTS : 
+
+<img width="1503" height="715" alt="image" src="https://github.com/user-attachments/assets/884c2d84-7c8e-4836-8f6c-0c6842fb7113" />
+<img width="1600" height="769" alt="image" src="https://github.com/user-attachments/assets/6914506e-a7a0-47c0-b0bb-95b19b062d79" />
+<img width="1600" height="763" alt="image" src="https://github.com/user-attachments/assets/dcdda2ba-226d-489a-bba2-5003e706e0ae" />
+<img width="1600" height="753" alt="image" src="https://github.com/user-attachments/assets/63b93ca8-87f0-4b57-9151-823f018d8f42" />
+<img width="1600" height="765" alt="image" src="https://github.com/user-attachments/assets/1af526bb-8227-41dc-8af5-24d59d0f6fde" />
+<img width="1600" height="766" alt="image" src="https://github.com/user-attachments/assets/1358ec63-c1bb-4976-823f-698a3ae120d1" />
+
+
