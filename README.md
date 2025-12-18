@@ -42,6 +42,10 @@ Featuring a premium UI, robust conflict detection, and secure authentication.
 Run the conflict logic tests:
 python test_conflict_logic.py
 
+DEMO VIDEO : 
+
+PLAY IT HERE - https://drive.google.com/file/d/1nXelh89F1RhO6ZFgLqzbITTAmCbW5Aho/view?usp=drive_link
+
 OUTPUT SCREENSHOTS : 
 
 <img width="1503" height="715" alt="image" src="https://github.com/user-attachments/assets/884c2d84-7c8e-4836-8f6c-0c6842fb7113" />
